@@ -1,38 +1,235 @@
+@font-face {
+  font-family: "font1";
+  src: url("./resource/font/me-quran.woff") format('woff');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "font2";
+  src: url("./resource/font/badr.woff") format('woff');
+}
+
 .App {
-  text-align: center;
+  font-family: 'font1';
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.sure {
+  border-bottom: 2px solid black;
+  margin: 2px;
+  display: grid;
+  place-items: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.sure:hover {
+  background-color: darkgray;
+  transition: all 200ms ease-in-out
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.search-area {
+  display: grid;
+  place-items: center;
+  margin: 5px;
+}
+
+.search-box {
+  min-width: 300px;
+  padding: .5em;
+  border-radius: 5px;
+  font-family: sans-serif;
+}
+
+.search-box:focus {
+  background-color: rgba(65, 65, 65, 0.212);
+}
+
+.sura-head {
+  display: grid;
+  place-items: center;
+  padding-top: 50px;
+
+}
+
+.translate {
+  margin: 12px;
+  font-size: 22px;
+}
+
+.translate-font1 {
+  font-family: sans-serif;
+}
+
+.translate-font2 {
+  font-family: Arial;
+}
+
+.aye {
+  margin: 12px;
+  margin-left: 75px;
+  font-size: 28px;
+}
+
+.aye-fs-28 {
+  font-size: 28px;
+}
+
+.aye-fs-22 {
+  font-size: 22px;
+}
+
+.aye-font1 {
+  font-family: 'font1';
+}
+
+.aye-font2 {
+  font-family: 'font2';
+}
+
+
+.besmellah {
+  font-size: 36px;
+  font-family: 'font1';
+}
+
+.aye:hover {
+  cursor: pointer;
+}
+
+.setting-logo {
+  transform: scale(.7);
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  z-index: 99;
+}
+
+.audio {
+  display: none;
+}
+
+.control-audio {
+  position: fixed;
+  display: grid;
+  place-items: center;
+  bottom: 6vh;
+  min-width: 100vw;
+}
+
+.aye-logo {
+  position: absolute;
+  left: 10px;
+}
+
+.stop {
+  transform: scale(1.5);
+  cursor: pointer;
+}
+
+.stop:hover {
+  transition: all 200ms ease-in-out;
+  scale: 1.2;
+  color: darkblue;
+}
+
+
+.colorize {
+  color: red;
+}
+
+.navigate {
+  position: fixed;
+  bottom: 1vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 1rem;
+  min-width: 100vw;
+}
+
+.wrapper {
+  margin-top: -10px;
+  padding: 1em;
+}
+
+.next,
+.back,
+.pre {
+  background: rgba(0, 0, 0, .5);
+  outline: none;
+  padding: .1em;
+  font-size: 18px;
+  color: white;
+  font-family: sans-serif;
+  border: none;
+}
+
+.next:hover,
+.back:hover,
+.pre:hover {
+  transition: all 200ms ease-in-out;
+  transform: scale(1.2);
+  background-color: rgb(85, 85, 85);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.page-content-wrapper {
+  font-family: sans-serif 'font1';
+  background: url('./resource/Images/background.jpg');
+  background-size: contain;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+.sure-head-detail {
+  font-family: 'font1';
+}
+
+.setting-wrapper {
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(202, 202, 168, 0.596), rgba(236, 191, 154, 0.541));
+}
+
+.setting-wrapper>* {
+  display: flex;
+  gap: 1rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.title {
+  font-family: sans-serif;
+  font-size: 22px;
+  font-weight: bolder;
+}
+
+.setting-title {
+  font-size: 42px;
+  font-weight: bolder;
+}
+
+.setting-btn {
+  background-color: unset;
+  outline: none;
+  color: black;
+  font-size: 22px;
+  border: 2px solid black;
+  border-radius: 7px;
+  min-width: 77px;
+}
+
+.setting-btn:hover {
+  transition: all 200ms ease-in-out;
+  transform: scale(1.2);
+  background-color: rgba(144, 238, 144, 0.596);
+}
+
+@media all and (max-width:768px) {
+  button {
+    font-size: 16px;
+    padding: .1em;
   }
 }
