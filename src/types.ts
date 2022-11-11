@@ -1,5 +1,7 @@
 export type Obj1 = {
   ayat: string[]
+  makarem: string[]
+  ansarian: string[]
   ayatNumber: number[]
   sure: string
   sureNumber: number
@@ -8,6 +10,8 @@ export type Obj1 = {
 
 export type Obj2 = {
   ayat: string[]
+  makarem: string[]
+  ansarian: string[]
   ayatNumber: number[]
   sure: string[]
   sureNumber: number[]

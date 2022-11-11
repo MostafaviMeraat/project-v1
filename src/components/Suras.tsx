@@ -6,6 +6,8 @@ import { Obj1 } from '../types'
 import { emla } from '../resource/quran-text-emla'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleNewData } from '../redux/actions/actions'
+import { ansarian } from '../resource/quran-translate.fa.ansarian'
+import { makarem } from '../resource/quran-translate.fa.makarem'
 
 
 const Suras = () => {
@@ -60,6 +62,8 @@ const Suras = () => {
     for (let c = 0; c < suras.length - 1; c++) {
       let arr: Obj1 = {
         ayat: [],
+        makarem: [],
+        ansarian: [],
         ayatNumber: [],
         sure: '',
         sureNumber: 0,
@@ -67,6 +71,8 @@ const Suras = () => {
       }
       for (let c1 = 0; c1 < (Number(suras[c][1]) - Number(suras[c][0]) + Number(suras[c][0])); c1++) {
         arr.ayat.push(emla[Number(suras[c][0]) + c1])
+        arr.makarem.push(makarem[Number(suras[c][0]) + c1])
+        arr.ansarian.push(ansarian[Number(suras[c][0]) + c1])
         arr.ayatNumber.push(c1 + 1)
         arr.sure = String(suras[c][4])
         arr.sureNumber = c + 1

@@ -1,12 +1,13 @@
 import { suras, pages } from './resource/quran-metadata'
 import './App.css';
-import { Obj1, Obj2, Aye } from './types';
+import { Obj2 } from './types';
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { AllReducers } from './redux/reducers';
 import ControlAudio from './components/ControlAudio';
 import SettingLogo from './components/SettingLogo';
+
 
 function App() {
 
@@ -33,6 +34,8 @@ function App() {
 
     const content: Obj2 = {
       ayat: [],
+      makarem: [],
+      ansarian: [],
       ayatNumber: [],
       sure: [],
       sureNumber: [],
@@ -50,12 +53,14 @@ function App() {
       if (endOfLoop > 0) {//when sure change
         for (let c = startSure; c <= startSure + endOfLoop; c++) {
 
-          if (c !== startSure + endOfLoop) {
+          if (c !== startSure + endOfLoop) {// !last round of loop
             for (let c1 = startAye - 1; c1 < data[c - 1].ayat.length; c1++) {
 
               if (data[c - 1].ayat[c1] !== undefined) {
                 // console.log(data[c - 1].ayat[c1], 'and ', data[c - 1].ayatNumber[c1]);
                 content.ayat.push(data[c - 1].ayat[c1])
+                content.makarem.push(data[c - 1].makarem[c1])
+                content.ansarian.push(data[c - 1].ansarian[c1])
                 content.ayatNumber.push(data[c - 1].ayatNumber[c1])
                 if (content.sure.length >= 0 && content.sure.indexOf(data[c - 1].sure) === -1) {
                   content.sure.push(data[c - 1].sure)
@@ -71,10 +76,12 @@ function App() {
             // console.log('sureNumber is: ', data[c - 1].sureNumber, 'type is: ', data[c - 1].type);
             startAye = 0
           }
-          else {
+          else { // last round of loop diffrence is in end of loop condition
             for (let c2 = 0; c2 < pages[Number(page) + 1][1] - 1; c2++) {
               // console.log(data[c - 1].ayat[c2], 'and ', data[c - 1].ayatNumber[c2]);
               content.ayat.push(data[c - 1].ayat[c2])
+              content.makarem.push(data[c - 1].makarem[c2])
+              content.ansarian.push(data[c - 1].ansarian[c2])
               content.ayatNumber.push(data[c - 1].ayatNumber[c2])
               if (content.sure.length >= 0 && content.sure.indexOf(data[c - 1].sure) === -1) {
                 content.sure.push(data[c - 1].sure)
@@ -99,6 +106,8 @@ function App() {
             if (data[c - 1].ayat[c1] !== undefined) {
               // console.log(data[c - 1].ayat[c1], 'and ', data[c - 1].ayatNumber[c1]);
               content.ayat.push(data[c - 1].ayat[c1])
+              content.makarem.push(data[c - 1].makarem[c1])
+              content.ansarian.push(data[c - 1].ansarian[c1])
               content.ayatNumber.push(data[c - 1].ayatNumber[c1])
               if (content.sure.length >= 0 && content.sure.indexOf(data[c - 1].sure) === -1) {
                 content.sure.push(data[c - 1].sure)
@@ -130,20 +139,16 @@ function App() {
   const backToMenu = () => {
     navigate('/')
   }
-  const handleSut = (item: Aye | string, index: number | string) => {
+  const handleSut = (sure0: number | string, aye0: number | string) => {
 
-    if (typeof item !== 'string' && typeof index !== 'string') {
-      let sure = String(item.sureNumber).padStart(3, '0')
-      let aye = String(index).padStart(3, '0')
-      setSure(sure)
-      setAye(aye)
+    if (typeof sure0 !== 'string' && typeof aye0 !== 'string') {
+      setSure(String(sure0).padStart(3, '0'))
+      setAye(String(aye0).padStart(3, '0'))
       setToggle(true)
     } else {
-      if (typeof item === 'string' && typeof index === 'string') {
-        setSure(item)
-        setAye(index)
-        setToggle(true)
-      }
+      setSure(String(sure0))
+      setAye(String(aye0))
+      setToggle(true)
     }
   }
   const handleNext = () => {
@@ -172,8 +177,6 @@ function App() {
       setToggle(false)
     }
   }
-  console.log(content);
-
   return (
     <div className="page-content-wrapper">
       <audio onEnded={handleNext} className="audio" controls autoPlay={toggle} muted={!toggle} src={`http://www.everyayah.com/data/${currentGhari}/${sure}${aye}.mp3`}>
@@ -184,35 +187,48 @@ function App() {
       <div className="content">
         {content.map((item: any, index: number) => {
           return (
-            <div key={index}>
+            <div key={index} >
               {item.ayat.map((i: string, idx: number) => {
                 return (
-                  <div key={idx}>
+                  <div key={idx} className='wrapper'>
                     {content[0].ayatNumber[idx] === 1
-                      ?
+                      ? //age shuru sure bud 
                       <div>
+                        <span className='hidden'>{cnt += 1}</span>
                         {content[0].sureNumber[cnt] !== 1 && content[0].sureNumber[cnt] !== 9
-                          ?
+                          ? // tobe va hamd nabud 
                           <div>
-                            <span className='hidden'>{cnt += 1}</span>
                             <br /><div>سوره <strong>{content[0].sureNumber[cnt]}</strong> قرآن <strong>{content[0].sure[cnt]}</strong> <strong>{suras[Number(content[0].sureNumber[cnt]) - 1][7]}</strong></div>
                             <br /><div>بِسۡمِ اللّٰهِ الرَّحۡمٰنِ الرَّحٖیمِ</div>
-                            <br /><div onClick={() => { handleSut(content[0], content[0].ayatNumber[idx]) }}>
-                              {i} {content[0].ayatNumber[idx]}
+                            <br /><div onClick={() => { handleSut(content[0].sureNumber[cnt], content[0].ayatNumber[idx]) }}>
+                              {i} {content[0].ayatNumber[idx]}<br /><br />
+                              {currentTranslate === 'makarem' ?
+                                <div>{content[0].makarem[idx]}</div>
+                                :
+                                <div>{content[0].ansarian[idx]}</div>}
                             </div>
                           </div>
-                          :
+                          ://tobe va hamd 
                           <div>
                             <br /><div>سوره <strong>{content[0].sureNumber[cnt]}</strong> قرآن <strong>{content[0].sure[cnt]}</strong> <strong>{suras[Number(content[0].sureNumber[cnt]) - 1][7]}</strong></div>
-                            <br /><div onClick={() => { handleSut(content[0], content[0].ayatNumber[idx]) }}>
-                              {i} {content[0].ayatNumber[idx]}
+                            <br /><div onClick={() => { handleSut(content[0].sureNumber[cnt], content[0].ayatNumber[idx]) }}>
+                              {i} {content[0].ayatNumber[idx]}<br /><br />
+                              {currentTranslate === 'makarem' ?
+                                <div>{content[0].makarem[idx]}</div>
+                                :
+                                <div>{content[0].ansarian[idx]}</div>}
                             </div>
                           </div>
                         }
                       </div>
-                      :
-                      <div onClick={() => handleSut(content[0], content[0].ayatNumber[cnt])}>
-                        {i} {content[0].ayatNumber[idx]}
+                      : //edame sure(!shuru sure)
+                      <div onClick={() => handleSut(content[0].sureNumber[cnt], content[0].ayatNumber[idx])}>
+                        {cnt < 0 && <span className='hidden'>{cnt += 1}</span>}
+                        {i} {content[0].ayatNumber[idx]}<br /><br />
+                        {currentTranslate === 'makarem' ?
+                          <div>{content[0].makarem[idx]}</div>
+                          :
+                          <div>{content[0].ansarian[idx]}</div>}
                       </div>
                     }
                   </div>)
@@ -230,3 +246,4 @@ function App() {
 }
 
 export default App;
+// font style and font sizes left to do
