@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { AllReducers } from './redux/reducers';
 import ControlAudio from './components/ControlAudio';
 import SettingLogo from './components/SettingLogo';
+import { classicNameResolver } from 'typescript';
 
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
   const currentFontStyle = localStorage.getItem('fontStyle')
   const currentFontSizeArabi = localStorage.getItem('fsArabi')
   const currentFontSizeFarsi = localStorage.getItem('fsFarsi')
+  console.log(currentFontStyle, currentFontSizeArabi, currentFontSizeFarsi);
+
 
   useEffect(() => {
     pageContent(Number(pageNumber))
@@ -178,7 +181,7 @@ function App() {
     }
   }
   return (
-    <div className="page-content-wrapper">
+    <div className={currentFontStyle === 'f1' ? 'page-content-wrapper aye-font1 translate-font1' : 'page-content-wrapper aye-font2 translate-font2'}>
       <audio onEnded={handleNext} className="audio" controls autoPlay={toggle} muted={!toggle} src={`http://www.everyayah.com/data/${currentGhari}/${sure}${aye}.mp3`}>
         play
       </audio>
@@ -198,37 +201,40 @@ function App() {
                         {content[0].sureNumber[cnt] !== 1 && content[0].sureNumber[cnt] !== 9
                           ? // tobe va hamd nabud 
                           <div>
-                            <br /><div>سوره <strong>{content[0].sureNumber[cnt]}</strong> قرآن <strong>{content[0].sure[cnt]}</strong> <strong>{suras[Number(content[0].sureNumber[cnt]) - 1][7]}</strong></div>
-                            <br /><div>بِسۡمِ اللّٰهِ الرَّحۡمٰنِ الرَّحٖیمِ</div>
-                            <br /><div onClick={() => { handleSut(content[0].sureNumber[cnt], content[0].ayatNumber[idx]) }}>
-                              {i} {content[0].ayatNumber[idx]}<br /><br />
+                            <h2 className='sure-head'>سوره {content[0].sureNumber[cnt]} قرآن {content[0].sure[cnt]} {suras[Number(content[0].sureNumber[cnt]) - 1][7]}</h2>
+                            <h2 className='sure-head'>بِسۡمِ اللّٰهِ الرَّحۡمٰنِ الرَّحٖیمِ</h2>
+                            <div
+                              onClick={() => { handleSut(content[0].sureNumber[cnt], content[0].ayatNumber[idx]) }}>
+                              <span className={currentFontSizeArabi === '28' ? 'aye aye-fs-28' : 'aye aye-fs-22'}>{i}</span> <span className='aye-number'>﴿{content[0].ayatNumber[idx]}﴾</span>
                               {currentTranslate === 'makarem' ?
-                                <div>{content[0].makarem[idx]}</div>
+                                <div className={currentFontSizeFarsi === '22' ? 'translate-fs-22' : 'translate-fs-18'}>{content[0].makarem[idx]}</div>
                                 :
-                                <div>{content[0].ansarian[idx]}</div>}
+                                <div className={currentFontSizeFarsi === '22' ? 'translate-fs-22' : 'translate-fs-18'}>{content[0].ansarian[idx]}</div>}
                             </div>
                           </div>
                           ://tobe va hamd 
                           <div>
-                            <br /><div>سوره <strong>{content[0].sureNumber[cnt]}</strong> قرآن <strong>{content[0].sure[cnt]}</strong> <strong>{suras[Number(content[0].sureNumber[cnt]) - 1][7]}</strong></div>
-                            <br /><div onClick={() => { handleSut(content[0].sureNumber[cnt], content[0].ayatNumber[idx]) }}>
-                              {i} {content[0].ayatNumber[idx]}<br /><br />
+                            <h2 className='sure-head'>سوره {content[0].sureNumber[cnt]} قرآن {content[0].sure[cnt]} {suras[Number(content[0].sureNumber[cnt]) - 1][7]}</h2>
+                            <div
+                              onClick={() => { handleSut(content[0].sureNumber[cnt], content[0].ayatNumber[idx]) }}>
+                              <span className={currentFontSizeArabi === '28' ? 'aye aye-fs-28' : 'aye aye-fs-22'}>{i}</span> <span className='aye-number'>﴿{content[0].ayatNumber[idx]}﴾</span>
                               {currentTranslate === 'makarem' ?
-                                <div>{content[0].makarem[idx]}</div>
+                                <div className={currentFontSizeFarsi === '22' ? 'translate-fs-22' : 'translate-fs-18'}>{content[0].makarem[idx]}</div>
                                 :
-                                <div>{content[0].ansarian[idx]}</div>}
+                                <div className={currentFontSizeFarsi === '22' ? 'translate-fs-22' : 'translate-fs-18'}>{content[0].ansarian[idx]}</div>}
                             </div>
                           </div>
                         }
                       </div>
                       : //edame sure(!shuru sure)
-                      <div onClick={() => handleSut(content[0].sureNumber[cnt], content[0].ayatNumber[idx])}>
+                      <div
+                        onClick={() => handleSut(content[0].sureNumber[cnt], content[0].ayatNumber[idx])}>
                         {cnt < 0 && <span className='hidden'>{cnt += 1}</span>}
-                        {i} {content[0].ayatNumber[idx]}<br /><br />
+                        <span className={currentFontSizeArabi === '28' ? 'aye aye-fs-28' : 'aye aye-fs-22'}>{i}</span> <span className='aye-number'>﴿{content[0].ayatNumber[idx]}﴾</span>
                         {currentTranslate === 'makarem' ?
-                          <div>{content[0].makarem[idx]}</div>
+                          <div className={currentFontSizeFarsi === '22' ? 'translate-fs-22' : 'translate-fs-18'}>{content[0].makarem[idx]}</div>
                           :
-                          <div>{content[0].ansarian[idx]}</div>}
+                          <div className={currentFontSizeFarsi === '22' ? 'translate-fs-22' : 'translate-fs-18'}>{content[0].ansarian[idx]}</div>}
                       </div>
                     }
                   </div>)

@@ -46,7 +46,6 @@
   display: grid;
   place-items: center;
   padding-top: 50px;
-
 }
 
 .translate {
@@ -60,12 +59,20 @@
 
 .translate-font2 {
   font-family: Arial;
+  font-weight: 600;
+}
+
+.translate-fs-22 {
+  font-size: 22px;
+}
+
+.translate-fs-18 {
+  font-size: 18px;
 }
 
 .aye {
   margin: 12px;
   margin-left: 75px;
-  font-size: 28px;
 }
 
 .aye-fs-28 {
@@ -114,7 +121,7 @@
   min-width: 100vw;
 }
 
-.aye-logo {
+.aye-number {
   position: absolute;
   left: 10px;
 }
@@ -147,6 +154,7 @@
 .wrapper {
   margin-top: -10px;
   padding: 1em;
+  margin-bottom: 35px;
 }
 
 .next,
@@ -171,13 +179,20 @@
 }
 
 .page-content-wrapper {
-  font-family: sans-serif 'font1';
   background: url('./resource/Images/background.jpg');
   background-size: contain;
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow-x: hidden;
 }
 
 .sure-head-detail {
   font-family: 'font1';
+}
+
+.sure-head {
+  word-spacing: 10px;
+  text-align: center;
 }
 
 .setting-wrapper {

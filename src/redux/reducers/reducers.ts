@@ -1,7 +1,5 @@
 import { ACTIONS } from '../actions/actions'
 import { Action } from '../../types'
-import { stat } from 'fs'
-
 
 const initialTranslate: string = 'ansarian'
 const initialGhari: string = 'Menshawi_32kbps'
